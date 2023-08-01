@@ -133,7 +133,7 @@ COMMANDS = {
     add: ("add", "+"),
     change: ("change", "edit"),
     phone: ("phone", "user"),
-    show_all: ("show all", "all"),
+    show_all: ("showall", "all"),
     good_bye: ("exit", "close", "end"),
     show_next: ("next",),
     rename: ("rename",),
@@ -158,7 +158,7 @@ def main():
         user_input = input(">>>")
         command, args, user_str = parser(user_input)
         if args != None:
-            result = command(*args, user_str)
+            result = command(*args)
         else:
             result = command()
         
