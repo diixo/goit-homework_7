@@ -65,7 +65,7 @@ def phone(*args):
     return "ERROR empty"
 
 @input_error
-def show_all():
+def show_all(*args):
     return address_book
 
 @input_error
@@ -157,7 +157,6 @@ def main():
     while True:
         user_input = input(">>>")
         command, args, user_str = parser(user_input)
-        print(user_str)
         if args != None:
             result = command(*args, user_str)
         else:
