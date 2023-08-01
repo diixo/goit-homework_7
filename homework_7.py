@@ -117,11 +117,13 @@ def find(*args):
     
 
 @input_error
-def add_note(*args, user_str: str):
+def add_note(*args):
+    user_str = "stub"
     note_book.add_note(user_str)
+    return user_str
 
 @input_error
-def edit_note(*args, user_str: str):
+def edit_note(*args):
     return args[0]
     #print(user_str)
     #note_book.edit_note(args[0], user_str)   
@@ -138,7 +140,7 @@ COMMANDS = {
     find: ("find", "search"),
 
     edit_note: ("notee",),
-    add_note: ("note",)
+    add_note: ("note+",)
 }
 
 def parser(text: str):
