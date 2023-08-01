@@ -1,7 +1,8 @@
-from classes_hw7 import AddressBook, Name, Phone, Birthday, Record
+from classes_hw7 import AddressBook, Name, Phone, Birthday, Record, NoteBook
 
 address_book = AddressBook()
 address_book_iterator = None
+note_book = NoteBook()
 
 
 def input_error(func):
@@ -115,7 +116,15 @@ def find(*args):
     return "Not found"
     
 
-    
+@input_error
+def add_note(*args, user_str: str):
+    note_book.add_note(user_str)
+
+@input_error
+def edit_note(*args, user_str: str):
+    return args[0]
+    #print(user_str)
+    #note_book.edit_note(args[0], user_str)   
 
 COMMANDS = {
     hello: ("hello", "hi"),
@@ -126,24 +135,29 @@ COMMANDS = {
     good_bye: ("exit", "close", "end"),
     show_next: ("next",),
     rename: ("rename",),
-    find: ("find", "search")
+    find: ("find", "search"),
+
+    edit_note: ("notee",),
+    add_note: ("note",)
 }
 
 def parser(text: str):
     for cmd, kwds in COMMANDS.items():
         for kwd in kwds:
             if text.lower().startswith(kwd):
-                data = text[len(kwd):].strip().split()
-                return cmd, data 
-    return no_command, None
+                string = text[len(kwd):].lstrip()
+                data = string.strip().split()
+                return cmd, data, string 
+    return no_command, None, None
 
 
 def main():
     while True:
         user_input = input(">>>")
-        command, args = parser(user_input)
+        command, args, user_str = parser(user_input)
+        print(user_str)
         if args != None:
-            result = command(*args)
+            result = command(*args, user_str)
         else:
             result = command()
         

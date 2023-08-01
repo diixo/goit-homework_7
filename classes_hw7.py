@@ -146,6 +146,24 @@ class AddressBookIterator:
         return str(self)
 
 
+class NoteBook(UserDict):
+
+    #self.data = dict{int, str}
+
+    def add_note(self, note: str):
+        key = len(self.data)
+        self.data[key] = note 
+
+    def edit_note(self, key: str, note: str):
+        if self.data.get(key):
+            print(self.data[key])
+            #self.data[key] = note
+
+    def __str__(self) -> str:
+        result = "\n".join([v for k, v in self.data])
+        return result
+
+
 class AddressBook(UserDict):
 
     def add_record(self, record: Record):
