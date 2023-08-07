@@ -1,5 +1,7 @@
 from classes_hw7 import AddressBook, Name, Phone, Birthday, Record, NoteBook
 
+import readline
+
 address_book = AddressBook()
 address_book_iterator = None
 note_book = NoteBook()
@@ -143,20 +145,36 @@ COMMANDS = {
     add_note: ("note+",)
 }
 
+################################################################
+# implementation autocomplete function
+def complete(text, state):
+    results = []
+    if len(text) > 0:
+        for cmd, kwds in COMMANDS.items():
+            for kwd in kwds:
+                if kwd.lower().startswith(text):
+                    results.append(kwd)
+    results.append(None)
+    return results[state]
+################################################################
+# set and bind autocomplete function 
+readline.parse_and_bind("tab: complete")
+readline.set_completer(complete)
+################################################################
+
 def parser(text: str):
     for cmd, kwds in COMMANDS.items():
         for kwd in kwds:
             if text.lower().startswith(kwd):
-                string = text[len(kwd):].lstrip()
-                data = string.strip().split()
-                return cmd, data, string 
-    return no_command, None, None
+                data = text[len(kwd):].strip().split()
+                return cmd, data 
+    return no_command, None
 
 
 def main():
     while True:
         user_input = input(">>>")
-        command, args, user_str = parser(user_input)
+        command, args = parser(user_input)
         if args != None:
             result = command(*args)
         else:
